@@ -33,11 +33,14 @@ def getTjsp_teste(driver: webdriver.Chrome) -> str:
     sleep(0.5)
     #select option cadernos ...
     select_cadernos = Select(driver.find_element(By.ID, "cadernos"))
+    list_cadernos = []
+    value_cadernos = 0
     
     for o in select_cadernos.options:
-        print(o.text)
+        list_cadernos.append({"text": o.text, "value": o.get_property("value"), "index": value_cadernos})
+        value_cadernos = value_cadernos + 1
 
-    return driver.page_source
+    return list_cadernos
 
 def doBackgroundTask(inp):
     print("Doing background task")

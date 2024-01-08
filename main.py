@@ -34,9 +34,9 @@ async def demo_get():
 async def get_tjsp_teste():
     driver=createDriver()
 
-    homepage = getTjsp_teste(driver)
+    data = getTjsp_teste(driver)
     driver.close()
-    return homepage
+    return data
 
 @app.get("/servicos/{model_service}")
 async def get_service(model_service: ModelService, cadernos: Union[str, int] = 0, secoes: Union[str, int] = 0 ):
