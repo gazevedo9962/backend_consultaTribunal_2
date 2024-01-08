@@ -69,7 +69,7 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
     data = { 
             "url": driver.current_url,
             "list_cadernos": list_cadernos,
-            "list_options": list_options
+            "list_secoes": list_secoes
             }
     #echos(list_texts_secoes)
     #write("./dados/cadernos.json", list_cadernos, "json")
