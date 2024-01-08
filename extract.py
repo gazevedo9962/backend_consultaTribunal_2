@@ -4,6 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support.ui import Select
 from time import sleep
+from selenium.webdriver.common.by import By
 
 def createDriver() -> webdriver.Chrome:
     chrome_options = webdriver.ChromeOptions()
