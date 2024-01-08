@@ -1,6 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support.ui import Select
 
 def createDriver() -> webdriver.Chrome:
     chrome_options = webdriver.ChromeOptions()
@@ -19,6 +21,20 @@ def createDriver() -> webdriver.Chrome:
 
 def getGoogleHomepage(driver: webdriver.Chrome) -> str:
     driver.get("https://www.google.com")
+    return driver.page_source
+
+def getTjsp_teste(driver: webdriver.Chrome) -> str:
+    driver.get("https://dje.tjsp.jus.br/cdje/index.do")
+    driver.implicitly_wait(20)
+    wait = WebDriverWait(driver, 10)
+
+    sleep(0.5)
+    #select option cadernos ...
+    select_cadernos = Select(driver.find_element(By.ID, "cadernos"))
+    
+    for o in select_cadernos.options:
+        print(o.text)
+
     return driver.page_source
 
 def doBackgroundTask(inp):
