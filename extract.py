@@ -32,7 +32,7 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
     sleep(0.5)
     #select option cadernos ...
     select_cadernos = Select(driver.find_element(By.ID, "cadernos"))
-    select_secoes.select_by_value(options_values['cadernos'])
+    select_cadernos.select_by_value(options_values['cadernos'])
     list_cadernos = []
     value_cadernos = 0
     
