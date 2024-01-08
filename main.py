@@ -29,7 +29,6 @@ async def demo_get():
     driver.close()
     return homepage
 
-
 @app.get("/tjsp-teste")
 async def get_tjsp_teste():
     driver=createDriver()
@@ -40,13 +39,15 @@ async def get_tjsp_teste():
 
 @app.get("/servicos/{model_service}")
 async def get_service(model_service: ModelService, cadernos: Union[str, int] = 0, secoes: Union[str, int] = 0 ):
-    print(ModelService, model_service)
-    if model_service is ModelService.consulta:
-        return {
-                "this is consult ...": model_service,
+    options_values = {
                 "cadernos": cadernos,
                 "secoes": secoes
                 }
+    driver=createDriver()
+    data = getTjsp_teste(driver, options_values)
+    driver.close()
+    return data
+
 #def post ...
 @app.post("/backgroundDemo")
 async def demo_post(inp: Msg, background_tasks: BackgroundTasks):
