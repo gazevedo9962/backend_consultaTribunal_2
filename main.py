@@ -2,6 +2,7 @@ from fastapi import FastAPI, BackgroundTasks, HTTPException
 from pydantic import BaseModel
 from extract import *
 import os
+from enum import Enum
 
 SECRET = os.getenv("SECRET")
 app = FastAPI()
