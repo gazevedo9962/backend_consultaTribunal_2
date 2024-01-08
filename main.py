@@ -3,6 +3,7 @@ from pydantic import BaseModel
 from extract import *
 import os
 from enum import Enum
+from typing import Union
 
 SECRET = os.getenv("SECRET")
 app = FastAPI()
@@ -29,7 +30,7 @@ async def demo_get():
     return homepage
 
 @app.get("/servicos/{model_service}")
-async def get_service(model_service: ModelService, cadernos: str | int = 0, secoes: str | int = 0):
+async def get_service(model_service: ModelService, cadernos: Union[str, int] = 0, secoes: Union[str, int] = 0 ):
     print(ModelService, model_service)
     if model_service is ModelService.consulta:
         return {
