@@ -40,12 +40,12 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
         list_cadernos.append({"text": o.text, "value": o.get_property("value"), "index": value_cadernos})
         value_cadernos = value_cadernos + 1
 
-     sleep(0.5)
-     #select option secao ...
-     select_secoes = Select(driver.find_element(By.ID, "secoes"))
-     select_secoes.select_by_value(options_values['secoes'])
-     list_secoes = []
-     value_secoes = 0
+    sleep(0.5)
+    #select option secao ...
+    select_secoes = Select(driver.find_element(By.ID, "secoes"))
+    select_secoes.select_by_value(options_values['secoes'])
+    list_secoes = []
+    value_secoes = 0
     
     for o in select_secoes.options:
         list_secoes.append({"text": o.text, "value": o.get_property("value"), "index": value_secoes})
