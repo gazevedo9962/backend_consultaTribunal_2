@@ -61,7 +61,8 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
     # Wait for the new window or tab
     wait.until(EC.number_of_windows_to_be(2))
     driver.switch_to.window(driver.window_handles[1])
-    
+    print(driver.current_url)
+
     #Wait for frame pdf is open in new window
     sleep(1)
     driver.execute_script("window.location.replace( document.getElementsByName('bottomFrame')[0].contentWindow.location.href )")
