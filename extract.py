@@ -67,11 +67,13 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
     sleep(1)
     driver.execute_script("window.location.replace( document.getElementsByName('bottomFrame')[0].contentWindow.location.href )")
     sleep(1)
+    print(driver.current_url)
     data = { 
             "url": driver.current_url,
             "list_cadernos": list_cadernos,
             "list_secoes": list_secoes
             }
+    sleep(4)                    
     print(driver.current_url)            
 
     return data
