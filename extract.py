@@ -72,9 +72,7 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
             "list_cadernos": list_cadernos,
             "list_secoes": list_secoes
             }
-    #echos(list_texts_secoes)
-    #write("./dados/cadernos.json", list_cadernos, "json")
-    #write("./dados/secao.json", list_secoes, "json")
+    print(driver.current_url)            
 
     return data
 
@@ -82,3 +80,8 @@ def doBackgroundTask(inp):
     print("Doing background task")
     print(inp.msg)
     print("Done")
+
+#rasc
+#echos(list_texts_secoes)
+#write("./dados/secao.json", list_secoes, "json")
+#write("./dados/cadernos.json", list_cadernos, "json")
