@@ -70,10 +70,11 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
     print(driver.current_url)
     data = { 
             "url": driver.current_url,
+            "source": driver.page_source,
             "list_cadernos": list_cadernos,
             "list_secoes": list_secoes
             }
-    sleep(4)                    
+    sleep(30)                    
     print(driver.current_url)            
 
     return data

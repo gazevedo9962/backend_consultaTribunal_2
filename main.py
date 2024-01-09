@@ -4,6 +4,7 @@ from extract import *
 import os
 from enum import Enum
 from typing import Union
+import json
 
 SECRET = os.getenv("SECRET")
 app = FastAPI()
@@ -46,7 +47,7 @@ async def get_service(model_service: ModelService, cadernos: Union[str, int] = 0
     driver=createDriver()
     data = getTjsp_teste(driver, options_values)
     driver.close()
-    return data
+    return json.dumps(data, indent=4, sort_keys=True)
 
 #def post ...
 @app.post("/backgroundDemo")
