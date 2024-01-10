@@ -38,7 +38,7 @@ def getGoogleHomepage(driver: webdriver.Chrome) -> str:
     driver.get("https://www.google.com")
     return driver.page_source
 
-def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
+def getTjsp_url(driver: webdriver.Chrome, options_values) -> str:
     driver.get("https://dje.tjsp.jus.br/cdje/index.do")
     driver.implicitly_wait(20)
     wait = WebDriverWait(driver, 10)
@@ -98,17 +98,54 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
     #Armazenando dados
     write("./dados/cadernos.json", list_cadernos, "json")
     write("./dados/resp_source/index.html", "<!DOCTYPE html>\n" + data["source"], False)
-    #Exibindo page pdf source
-    os.system("cat ./dados/resp_source/index.html") 
-
+    #Retornando data
     return data
+
+def getTjsp_secao(driver: webdriver.Chrome, options_values) -> str:
+    driver.get("https://dje.tjsp.jus.br/cdje/index.do")
+    driver.implicitly_wait(20)
+    wait = WebDriverWait(driver, 10)
+    
+    #sleep(0.5)
+    #select option cadernos ...
+    select_cadernos = Select(driver.find_element(By.ID, "cadernos"))
+    if int(options_values['cadernos']) < len(select_cadernos.options):
+        select_cadernos.select_by_value(options_values['cadernos'])
+    else:
+        select_cadernos.select_by_value(str(0))    
+    list_cadernos = []
+    value_cadernos = 0
+    
+    for o in select_cadernos.options:
+        list_cadernos.append({"text": o.text, "value": o.get_property("value"), "index": value_cadernos})
+        value_cadernos = value_cadernos + 1
+
+    #sleep(0.5)
+    #select option secao ...
+    select_secoes = Select(driver.find_element(By.ID, "secoes"))
+    if int(options_values['secoes']) < len(select_secoes.options):
+        select_secoes.select_by_value(options_values['secoes'])
+    else:
+        select_secoes.select_by_value(str(0))
+    list_secoes = []
+    value_secoes = 0
+    
+    for o in select_secoes.options:
+        list_secoes.append({"text": o.text, "value": o.get_property("value"), "index": value_secoes})
+        value_secoes = value_secoes + 1
+    
+    #select_secoes.select_by_visible_text("Seção de Direito Privado")
+    #sleep(0.5)
+    return list_secoes
 
 def doBackgroundTask(inp):
     print("Doing background task")
     print(inp.msg)
     print("Done")
 
-#rasc
+#rasc - func - getTjsp_url
 #echos(list_texts_secoes)
 #write("./dados/secao.json", list_secoes, "json")
 #write("./dados/cadernos.json", list_cadernos, "json")
+#Exibindo page pdf source
+#os.system("cat ./dados/resp_source/index.html") 

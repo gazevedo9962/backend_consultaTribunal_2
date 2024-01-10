@@ -32,7 +32,7 @@ async def demo_get():
 @app.get("/tjsp-teste")
 async def get_tjsp_teste():
     driver=createDriver()
-    data = getTjsp_teste(driver)
+    data = getTjsp_url(driver)
     driver.close()
     return data
 
@@ -45,12 +45,25 @@ async def get_service(request: Request, model_service: ModelService):
                 "secoes": request.query_params["secoes"] or 0
                 }
     driver=createDriver()
-    data = getTjsp_teste(driver, options_values)
+    data = getTjsp_url(driver, options_values)
     driver.close()    
     return data
 
-@app.get("/tjsp/cadernos")
-async def get_cadernos(request: Request):
+@app.get("/tjsp/servicos/{model_service}/secoes")
+async def get_service(request: Request, model_service: ModelService):
+    #rasc - func - get_service
+    #cadernos: Union[str, int] = 0, secoes: Union[str, int] = 0 
+    options_values = {
+                "cadernos": request.query_params["cadernos"] or 0,
+                "secoes": request.query_params["secoes"] or 0
+                }
+    driver=createDriver()
+    secao = getTjsp_secao(driver, options_values)
+    driver.close()    
+    return secao
+
+@app.get("/tjsp/servicos/{model_service}/cadernos")
+async def get_cadernos(request: Request, model_service: ModelService):
     #rasc - func - get_cadernos
     #print(request.query_params["teste"])
     #json.dumps(data, indent=4, sort_keys=True)
