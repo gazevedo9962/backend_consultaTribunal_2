@@ -62,20 +62,20 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
     wait.until(EC.number_of_windows_to_be(2))
     driver.switch_to.window(driver.window_handles[1])
     print(driver.current_url)
-
+    strings_url = driver.current_url.split(".do")
+    string_inicial = "https://dje.tjsp.jus.br/cdje/getPaginaDoDiario.do"
+    string_final = "&uuidCaptcha="
+    url_geral = string_inicial + strings_url[1] + string_final 
     #Wait for frame pdf is open in new window
-    sleep(1)
-    driver.execute_script("window.location.replace( document.getElementsByName('bottomFrame')[0].contentWindow.location.href )")
-    sleep(1)
+    #driver.execute_script("window.location.replace( document.getElementsByName('bottomFrame')[0].contentWindow.location.href )")
+    sleep(0.5)
     print(driver.current_url)
     data = { 
-            "url": driver.current_url,
+            "url": url_geral,
             "source": driver.page_source,
             "list_cadernos": list_cadernos,
             "list_secoes": list_secoes
             }
-    sleep(30)                    
-    print(driver.current_url)            
 
     return data
 
