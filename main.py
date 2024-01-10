@@ -47,7 +47,8 @@ async def get_service(model_service: ModelService, cadernos: Union[str, int] = 0
     driver=createDriver()
     data = getTjsp_teste(driver, options_values)
     driver.close()
-    return json.dumps(data, indent=4, sort_keys=True)
+    #json.dumps(data, indent=4, sort_keys=True)
+    return data
 
 #def post ...
 @app.post("/backgroundDemo")
