@@ -31,6 +31,7 @@ function getdata () {
     // manipula o sucesso da requisição
     console.log(response);
     command("chrome", response.data.url)
+    console.log(response.data.list_cadernos)
   })
   .catch(function (error) {
     // manipula erros da requisição

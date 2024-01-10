@@ -48,13 +48,6 @@ async def get_service(model_service: ModelService, cadernos: Union[str, int] = 0
     #json.dumps(data, indent=4, sort_keys=True)
     return data
 
-@app.get("/tjsp/secoes")
-async def get_secoes():
-    with open("./dados/secao.json", 'r',  -1, "utf-8") as arquivo1:
-        dados_secao = json.load(arquivo1)
-    #json.dumps(data, indent=4, sort_keys=True)
-    return dados_secao
-
 @app.get("/tjsp/cadernos")
 async def get_cadernos():
     with open("./dados/cadernos.json", 'r',  -1, "utf-8") as arquivo2:
