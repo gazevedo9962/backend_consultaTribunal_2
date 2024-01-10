@@ -21,7 +21,7 @@ async function command (command, args) {
 }
 
 function getdata () {
-  axios.get("https://fastapi-selenium-production-30d6.up.railway.app/servicos/consulta?cadernos=0&secoes=0", {
+  axios.get("https://fastapi-selenium-production-30d6.up.railway.app/tjsp/servicos/consulta?cadernos=0&secoes=0", {
     params: {
       "cadernos": argv[2] || 0,
       "secoes": argv[3] || 0

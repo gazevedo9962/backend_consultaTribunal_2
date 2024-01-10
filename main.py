@@ -44,11 +44,7 @@ async def get_service(model_service: ModelService, cadernos: Union[str, int] = 0
                 }
     driver=createDriver()
     data = getTjsp_teste(driver, options_values)
-    driver.close()
-    with open("./dados/secao.json", 'r',  -1, "utf-8") as arquivo1:
-        dados_secao = json.load(arquivo1)
-    with open("./dados/cadernos.json", 'r',  -1, "utf-8") as arquivo2:
-        dados_cadernos = json.load(arquivo2)        
+    driver.close()    
     #json.dumps(data, indent=4, sort_keys=True)
     return data
 
@@ -56,10 +52,15 @@ async def get_service(model_service: ModelService, cadernos: Union[str, int] = 0
 async def get_secoes():
     with open("./dados/secao.json", 'r',  -1, "utf-8") as arquivo1:
         dados_secao = json.load(arquivo1)
+    #json.dumps(data, indent=4, sort_keys=True)
+    return dados_secao
+
+@app.get("/tjsp/cadernos")
+async def get_cadernos():
     with open("./dados/cadernos.json", 'r',  -1, "utf-8") as arquivo2:
         dados_cadernos = json.load(arquivo2)        
     #json.dumps(data, indent=4, sort_keys=True)
-    return dados_secao
+    return dados_cadernos
 
 #def post ...
 @app.post("/backgroundDemo")
