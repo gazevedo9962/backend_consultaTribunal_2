@@ -44,7 +44,10 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
     sleep(0.5)
     #select option cadernos ...
     select_cadernos = Select(driver.find_element(By.ID, "cadernos"))
-    select_cadernos.select_by_value(options_values['cadernos'])
+    if [ int(options_values['cadernos']) <= len(select_cadernos.options) ]:
+        select_cadernos.select_by_value(options_values['cadernos'])
+    else:
+        select_cadernos.select_by_value(0)    
     list_cadernos = []
     value_cadernos = 0
     
@@ -55,7 +58,10 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
     sleep(0.5)
     #select option secao ...
     select_secoes = Select(driver.find_element(By.ID, "secoes"))
-    select_secoes.select_by_value(options_values['secoes'])
+    if [ int(options_values['secoes']) <= len(select_secoes.options) ]:
+        select_secoes.select_by_value(options_values['secoes'])
+    else:
+        select_secoes.select_by_value(0)
     list_secoes = []
     value_secoes = 0
     
