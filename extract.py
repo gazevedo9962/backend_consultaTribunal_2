@@ -97,7 +97,7 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
             }
     #Armazenando dados
     write("./dados/cadernos.json", list_cadernos, "json")
-    write("./dados/resp_source/index.html", "<!DOCTYPE html>\n" + data["source"])
+    write("./dados/resp_source/index.html", "<!DOCTYPE html>\n" + data["source"], false)
     #Exibindo page pdf source
     os.system("cat ./dados/resp_source/index.html") 
 
