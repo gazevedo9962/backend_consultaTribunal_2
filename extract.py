@@ -120,7 +120,7 @@ def getTjsp_secao(driver: webdriver.Chrome, options_values) -> str:
         list_cadernos.append({"text": o.text, "value": o.get_property("value"), "index": value_cadernos})
         value_cadernos = value_cadernos + 1
 
-    #sleep(0.5)
+    sleep(0.5)
     #select option secao ...
     select_secoes = Select(driver.find_element(By.ID, "secoes"))
     if int(options_values['secoes']) < len(select_secoes.options):
