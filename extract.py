@@ -11,7 +11,7 @@ import json
 def write(path, dado, dadotype):
     #echo {dado} > \"{path}\" &&\
     print(f"{path}")
-    if [dadotype == "json"]:
+    if dadotype == "json":
          arquivo = open(path, "w", -1, "utf-8")
          arquivo.write(json.dumps(dado, ensure_ascii=False, indent=4, sort_keys=True))
     else:
