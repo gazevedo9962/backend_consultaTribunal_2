@@ -37,24 +37,26 @@ async def get_tjsp_teste():
     return data
 
 @app.get("/tjsp/servicos/{model_service}")
-async def get_service(model_service: ModelService, cadernos: Union[str, int] = 0, secoes: Union[str, int] = 0 ):
+async def get_service(request: Request, model_service: ModelService):
+    #rasc - func - get_service
+    #cadernos: Union[str, int] = 0, secoes: Union[str, int] = 0 
     options_values = {
-                "cadernos": cadernos,
-                "secoes": secoes
+                "cadernos": request.query_params["cadernos"] or 0,
+                "secoes": request.query_params["secoes"] or 0
                 }
     driver=createDriver()
     data = getTjsp_teste(driver, options_values)
     driver.close()    
-    #json.dumps(data, indent=4, sort_keys=True)
     return data
 
 @app.get("/tjsp/cadernos")
 async def get_cadernos(request: Request):
-    print(request.query_params["teste"])
+    #rasc - func - get_cadernos
+    #print(request.query_params["teste"])
+    #json.dumps(data, indent=4, sort_keys=True)
     with open("./dados/cadernos.json", 'r',  -1, "utf-8") as arquivo:
         if [arquivo]:
             dados_cadernos = json.load(arquivo)        
-    #json.dumps(data, indent=4, sort_keys=True)
     if [ dados_cadernos ]:
         return dados_cadernos
     else:    

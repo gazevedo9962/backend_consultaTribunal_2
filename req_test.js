@@ -6,7 +6,7 @@ const command = require("./command");
 // "http://localhost:6546/"
 
 function getdata () {
-  axios.get("https://fastapi-selenium-production-30d6.up.railway.app/tjsp/servicos/consulta?cadernos=0&secoes=0", {
+  axios.get("https://fastapi-selenium-production-30d6.up.railway.app/tjsp/servicos/consulta", {
     params: {
       "cadernos": argv[2] || 0,
       "secoes": argv[3] || 0
