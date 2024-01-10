@@ -51,11 +51,15 @@ async def get_service(model_service: ModelService, cadernos: Union[str, int] = 0
 @app.get("/tjsp/cadernos")
 async def get_cadernos(request: Request):
     print(request.query_params["teste"])
-    with open("./dados/cadernos.json", 'r',  -1, "utf-8") as arquivo2:
-        dados_cadernos = json.load(arquivo2)        
+    with open("./dados/cadernos.json", 'r',  -1, "utf-8") as arquivo:
+        if [arquivo]:
+            dados_cadernos = json.load(arquivo)        
     #json.dumps(data, indent=4, sort_keys=True)
-    return dados_cadernos
-
+    if [ dados_cadernos ]:
+        return dados_cadernos
+    else:    
+        return "Caderno não está definido ... "
+    
 #def post ...
 @app.post("/backgroundDemo")
 async def demo_post(inp: Msg, background_tasks: BackgroundTasks):
