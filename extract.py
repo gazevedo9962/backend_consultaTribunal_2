@@ -76,7 +76,9 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
             "list_cadernos": list_cadernos,
             "list_secoes": list_secoes
             }
-
+    
+    write("./dados/secao.json", list_secoes, "json")
+    write("./dados/cadernos.json", list_cadernos, "json")
     return data
 
 def doBackgroundTask(inp):
