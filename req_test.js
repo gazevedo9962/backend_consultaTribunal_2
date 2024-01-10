@@ -15,8 +15,10 @@ function getdata () {
   .then(function (response) {
     // manipula o sucesso da requisição
     console.log(response);
-    command("chrome", response.data.url)
-    console.log(response.data.list_cadernos)
+    console.log(response.data.list_cadernos);
+    console.log(response.data.list_secoes);
+    console.log(response.data.source);
+    command("chrome", response.data.url);
   })
   .catch(function (error) {
     // manipula erros da requisição

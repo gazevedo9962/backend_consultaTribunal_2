@@ -7,6 +7,7 @@ from time import sleep
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 import json
+import os
 
 def write(path, dado, dadotype):
     #echo {dado} > \"{path}\" &&\
@@ -26,7 +27,6 @@ def createDriver() -> webdriver.Chrome:
     
     prefs = {"profile.managed_default_content_settings.images":2}
     chrome_options.headless = True
-
 
     chrome_options.add_experimental_option("prefs", prefs)
     myDriver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
@@ -94,8 +94,12 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
             "list_cadernos": list_cadernos,
             "list_secoes": list_secoes
             }
-    #write("./dados/secao.json", list_secoes, "json")
+    #Armazenando dados
     write("./dados/cadernos.json", list_cadernos, "json")
+    write("./dados/resp_source/index.html", "<!DOCTYPE html>\n" + data["source"])
+    #Exibindo page pdf source
+    os.system("cat ./dados/resp_source/index.html") 
+
     return data
 
 def doBackgroundTask(inp):
