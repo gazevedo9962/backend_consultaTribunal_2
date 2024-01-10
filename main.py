@@ -25,7 +25,6 @@ async def root():
 @app.get("/homepage")
 async def demo_get():
     driver=createDriver()
-
     homepage = getGoogleHomepage(driver)
     driver.close()
     return homepage
@@ -33,12 +32,11 @@ async def demo_get():
 @app.get("/tjsp-teste")
 async def get_tjsp_teste():
     driver=createDriver()
-
     data = getTjsp_teste(driver)
     driver.close()
     return data
 
-@app.get("/servicos/{model_service}")
+@app.get("/tjsp/servicos/{model_service}")
 async def get_service(model_service: ModelService, cadernos: Union[str, int] = 0, secoes: Union[str, int] = 0 ):
     options_values = {
                 "cadernos": cadernos,
@@ -47,8 +45,21 @@ async def get_service(model_service: ModelService, cadernos: Union[str, int] = 0
     driver=createDriver()
     data = getTjsp_teste(driver, options_values)
     driver.close()
+    with open("./dados/secao.json", 'r',  -1, "utf-8") as arquivo1:
+        dados_secao = json.load(arquivo1)
+    with open("./dados/cadernos.json", 'r',  -1, "utf-8") as arquivo2:
+        dados_cadernos = json.load(arquivo2)        
     #json.dumps(data, indent=4, sort_keys=True)
     return data
+
+@app.get("/tjsp/secoes")
+async def get_secoes():
+    with open("./dados/secao.json", 'r',  -1, "utf-8") as arquivo1:
+        dados_secao = json.load(arquivo1)
+    with open("./dados/cadernos.json", 'r',  -1, "utf-8") as arquivo2:
+        dados_cadernos = json.load(arquivo2)        
+    #json.dumps(data, indent=4, sort_keys=True)
+    return dados_secao
 
 #def post ...
 @app.post("/backgroundDemo")
