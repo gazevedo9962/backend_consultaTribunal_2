@@ -41,6 +41,7 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
     driver.get("https://dje.tjsp.jus.br/cdje/index.do")
     driver.implicitly_wait(20)
     wait = WebDriverWait(driver, 10)
+    
     sleep(0.5)
     #select option cadernos ...
     select_cadernos = Select(driver.find_element(By.ID, "cadernos"))
