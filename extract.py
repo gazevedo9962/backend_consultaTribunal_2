@@ -44,6 +44,7 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
     sleep(0.5)
     #select option cadernos ...
     select_cadernos = Select(driver.find_element(By.ID, "cadernos"))
+    print(int(options_values['cadernos']), len(select_cadernos.options))
     if [ int(options_values['cadernos']) < len(select_cadernos.options) ]:
         select_cadernos.select_by_value(options_values['cadernos'])
     else:
