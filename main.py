@@ -1,4 +1,4 @@
-from fastapi import FastAPI, BackgroundTasks, HTTPException
+from fastapi import FastAPI, BackgroundTasks, HTTPException, Request
 from pydantic import BaseModel
 from extract import *
 import os
@@ -49,7 +49,8 @@ async def get_service(model_service: ModelService, cadernos: Union[str, int] = 0
     return data
 
 @app.get("/tjsp/cadernos")
-async def get_cadernos():
+async def get_cadernos(request: Request):
+    print(request.query_params["teste"])
     with open("./dados/cadernos.json", 'r',  -1, "utf-8") as arquivo2:
         dados_cadernos = json.load(arquivo2)        
     #json.dumps(data, indent=4, sort_keys=True)
