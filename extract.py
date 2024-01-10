@@ -6,6 +6,7 @@ from selenium.webdriver.support.ui import Select
 from time import sleep
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
+import json
 
 def write(path, dado, dadotype):
     #echo {dado} > \"{path}\" &&\
@@ -16,7 +17,7 @@ def write(path, dado, dadotype):
     else:
         arquivo = open(path, "w", -1, "utf-8")
         arquivo.write(str(dado))
-        
+
 def createDriver() -> webdriver.Chrome:
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--headless")
