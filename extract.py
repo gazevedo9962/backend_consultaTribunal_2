@@ -7,6 +7,16 @@ from time import sleep
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 
+def write(path, dado, dadotype):
+    #echo {dado} > \"{path}\" &&\
+    print(f"{path}")
+    if [dadotype == "json"]:
+         arquivo = open(path, "w", -1, "utf-8")
+         arquivo.write(json.dumps(dado, ensure_ascii=False, indent=4, sort_keys=True))
+    else:
+        arquivo = open(path, "w", -1, "utf-8")
+        arquivo.write(str(dado))
+        
 def createDriver() -> webdriver.Chrome:
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--headless")
