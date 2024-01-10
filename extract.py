@@ -79,8 +79,8 @@ def getTjsp_teste(driver: webdriver.Chrome, options_values) -> str:
     url_geral = string_inicial + strings_url[1] + string_final 
     #Wait for frame pdf is open in new window
     #driver.execute_script("window.location.replace( document.getElementsByName('bottomFrame')[0].contentWindow.location.href )")
-    sleep(0.5)
-    print(driver.current_url)
+    #sleep(0.5)
+    #print(driver.current_url)
     data = { 
             "url": url_geral,
             "source": driver.page_source,

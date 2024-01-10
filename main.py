@@ -54,9 +54,11 @@ async def get_cadernos(request: Request):
     #rasc - func - get_cadernos
     #print(request.query_params["teste"])
     #json.dumps(data, indent=4, sort_keys=True)
-    with open("./dados/cadernos.json", 'r',  -1, "utf-8") as arquivo:
-        if [arquivo]:
-            dados_cadernos = json.load(arquivo)        
+    if [ open("./dados/cadernos.json", 'r',  -1, "utf-8") ]:
+        with open("./dados/cadernos.json", 'r',  -1, "utf-8") as arquivo:
+            if [arquivo]:
+                dados_cadernos = json.load(arquivo)        
+                
     if [ dados_cadernos ]:
         return dados_cadernos
     else:    
