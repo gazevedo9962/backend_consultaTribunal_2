@@ -140,10 +140,6 @@ def getTjsp_caderno(driver: webdriver.Chrome, options_values) -> str:
     sleep(0.2)
     #select option cadernos ...
     select_cadernos = Select(driver.find_element(By.ID, "cadernos"))
-    if int(options_values['cadernos']) < len(select_cadernos.options):
-        select_cadernos.select_by_value(options_values['cadernos'])
-    else:
-        select_cadernos.select_by_value(str(0))    
     list_cadernos = []
     value_cadernos = 0
     
