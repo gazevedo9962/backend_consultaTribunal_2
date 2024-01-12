@@ -113,12 +113,6 @@ def getTjsp_secao(driver: webdriver.Chrome, options_values) -> str:
         select_cadernos.select_by_value(options_values['cadernos'])
     else:
         select_cadernos.select_by_value(str(0))    
-    list_cadernos = []
-    value_cadernos = 0
-    
-    for o in select_cadernos.options:
-        list_cadernos.append({"text": o.text, "value": o.get_property("value"), "index": value_cadernos})
-        value_cadernos = value_cadernos + 1
 
     sleep(0.2)
     #select option secao ...
@@ -137,6 +131,27 @@ def getTjsp_secao(driver: webdriver.Chrome, options_values) -> str:
     #select_secoes.select_by_visible_text("Seção de Direito Privado")
     #sleep(0.5)
     return list_secoes
+
+def getTjsp_caderno(driver: webdriver.Chrome, options_values) -> str:
+    driver.get("https://dje.tjsp.jus.br/cdje/index.do")
+    driver.implicitly_wait(20)
+    wait = WebDriverWait(driver, 10)
+    
+    sleep(0.2)
+    #select option cadernos ...
+    select_cadernos = Select(driver.find_element(By.ID, "cadernos"))
+    if int(options_values['cadernos']) < len(select_cadernos.options):
+        select_cadernos.select_by_value(options_values['cadernos'])
+    else:
+        select_cadernos.select_by_value(str(0))    
+    list_cadernos = []
+    value_cadernos = 0
+    
+    for o in select_cadernos.options:
+        list_cadernos.append({"text": o.text, "value": o.get_property("value"), "index": value_cadernos})
+        value_cadernos = value_cadernos + 1
+
+   return list_cadernos
 
 def doBackgroundTask(inp):
     print("Doing background task")

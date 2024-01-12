@@ -67,15 +67,14 @@ async def get_cadernos(request: Request, model_service: ModelService):
     #rasc - func - get_cadernos
     #print(request.query_params["teste"])
     #json.dumps(data, indent=4, sort_keys=True)
-    if open("./dados/cadernos.json", 'r',  -1, "utf-8"):
-        with open("./dados/cadernos.json", 'r',  -1, "utf-8") as arquivo:
-            if arquivo:
-                dados_cadernos = json.load(arquivo)        
-
-    if dados_cadernos:
-        return dados_cadernos
-    else:    
-        return "Caderno não está definido ... "
+    options_values = {
+                "cadernos": request.query_params["cadernos"] or 0,
+                "secoes": request.query_params["secoes"] or 0
+                }
+    driver=createDriver()
+    cadernos = getTjsp_caderno(driver, options_values)
+    driver.close()    
+    return cadernos
     
 #def post ...
 @app.post("/backgroundDemo")
