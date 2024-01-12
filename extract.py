@@ -151,7 +151,7 @@ def getTjsp_caderno(driver: webdriver.Chrome, options_values) -> str:
         list_cadernos.append({"text": o.text, "value": o.get_property("value"), "index": value_cadernos})
         value_cadernos = value_cadernos + 1
 
-   return list_cadernos
+    return list_cadernos
 
 def doBackgroundTask(inp):
     print("Doing background task")
