@@ -72,7 +72,7 @@ def getTjsp_url(driver: webdriver.Chrome, options_values) -> str:
         value_secoes = value_secoes + 1
     
     #select_secoes.select_by_visible_text("Seção de Direito Privado")
-    sleep(0.5)
+    sleep(0.2)
     #consultar ...
     consultar = driver.find_element(By.ID, "consultar")
     consultar.click()

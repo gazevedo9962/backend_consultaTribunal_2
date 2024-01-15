@@ -18,7 +18,7 @@ function getdata () {
     console.log(response.data.list_cadernos);
     console.log(response.data.list_secoes);
     console.log(response.data.source);
-    command("chrome", response.data.url);
+    command("google-chrome", response.data.url);
   })
   .catch(function (error) {
     // manipula erros da requisição
