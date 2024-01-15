@@ -5,9 +5,18 @@ import os
 from enum import Enum
 from typing import Union
 import json
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 SECRET = os.getenv("SECRET")
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 #def class ...
 class Msg(BaseModel):
