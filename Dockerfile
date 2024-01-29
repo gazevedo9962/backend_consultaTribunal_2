@@ -15,4 +15,4 @@ RUN python3 -m pip install webdriver-manager --upgrade
 RUN python3 -m pip install packaging
 RUN python3 -m pip install docker-compose
 COPY . .
-CMD uvicorn main:app --host 0.0.0.0 --port 5896
+CMD uvicorn main:app --host 0.0.0.0 --port $PORT
