@@ -35,14 +35,14 @@ async def root():
 async def demo_get():
     driver=createDriver()
     homepage = getGoogleHomepage(driver)
-    driver.close()
+    tearDown(driver)
     return homepage
 
 @app.get("/tjsp-teste")
 async def get_tjsp_teste():
     driver=createDriver()
     data = getTjsp_url(driver)
-    driver.close()
+    tearDown(driver)
     return data
 
 @app.get("/tjsp/servicos/{model_service}")
@@ -54,9 +54,18 @@ async def get_service(request: Request, model_service: ModelService):
                 "secoes": request.query_params["secoes"] or 0
                 }
     driver=createDriver()
-    data = getTjsp_url(driver, options_values)
-    driver.close()    
+    data = consulta(driver, options_values)
+    tearDown(driver)    
     return data
+
+@app.get("/tjsp/servicos/{model_service}/up_db")
+async def get_service(request: Request, model_service: ModelService):
+    #rasc - func - get_service
+    #cadernos: Union[str, int] = 0, secoes: Union[str, int] = 0 
+    driver=createDriver()
+    data = up_db(driver)
+    tearDown(driver)    
+    return data    
 
 @app.get("/tjsp/servicos/{model_service}/secoes")
 async def get_service(request: Request, model_service: ModelService):
@@ -66,10 +75,10 @@ async def get_service(request: Request, model_service: ModelService):
                 "cadernos": request.query_params["cadernos"] or 0,
                 "secoes": request.query_params["secoes"] or 0
                 }
-    driver=createDriver()
-    secao = getTjsp_secao(driver, options_values)
-    driver.close()    
-    return secao
+    with open("./dados/json/cadernos.json") as arquivo:
+        cadernos = json.load(arquivo)
+    secoes = cadernos[int(options_values["cadernos"])]["secao"] 
+    return secoes[int(options_values["secoes"])]
 
 @app.get("/tjsp/servicos/{model_service}/cadernos")
 async def get_cadernos(request: Request, model_service: ModelService):
@@ -77,12 +86,19 @@ async def get_cadernos(request: Request, model_service: ModelService):
     #print(request.query_params["teste"])
     #json.dumps(data, indent=4, sort_keys=True)
     options_values = {
-                "cadernos": request.query_params["cadernos"] or 0,
-                "secoes": request.query_params["secoes"] or 0
+                "cadernos": request.query_params["cadernos"] or 0
                 }
-    driver=createDriver()
-    cadernos = getTjsp_caderno(driver, options_values)
-    driver.close()    
+    with open("./dados/json/cadernos.json") as arquivo:
+        cadernos = json.load(arquivo)
+    return cadernos[int(options_values["cadernos"])] 
+
+@app.get("/tjsp/servicos/{model_service}/cadernos_secoes")
+async def get_cadernos_secoes(request: Request, model_service: ModelService):
+    #rasc - func - get_cadernos
+    #print(request.query_params["teste"])
+    #json.dumps(data, indent=4, sort_keys=True)
+    with open("./dados/json/cadernos.json") as arquivo:
+        cadernos = json.load(arquivo)
     return cadernos
     
 #def post ...
@@ -91,5 +107,4 @@ async def demo_post(inp: Msg, background_tasks: BackgroundTasks):
     
     background_tasks.add_task(doBackgroundTask, inp)
     return {"message": "Success, background task started"}
-
 

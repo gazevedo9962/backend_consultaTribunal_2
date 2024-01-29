@@ -1,0 +1,23 @@
+const axios = require('axios').default;
+const fs = require('fs');
+const { argv } = require('process');
+const command = require("./command");
+// http://gazevedo996.pythonanywhere.com/
+// "http://localhost:6546/"
+
+function getdata () {
+  axios.get("http://0.0.0.0:5896/tjsp/servicos/consulta/up_db")
+  .then(function (response) {
+    // manipula o sucesso da requisição
+    console.log(response);
+    command("google-chrome", response.data.url);
+  })
+  .catch(function (error) {
+    // manipula erros da requisição
+    console.error(error);
+  })
+  .finally(function () {
+    // sempre será executado
+  });
+}
+getdata();
