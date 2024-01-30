@@ -119,7 +119,7 @@ async def get_cadernos_secoes(request: Request, model_service: ModelService):
     with open("./dados/json/secao.json") as arquivo2:
         secoes = json.load(arquivo2)
         
-    data = { "list_cadernos": cadernos[int(options_values["cadernos"])], "list_secoes": secoes[int(options_values["secoes"])] }
+    data = { "list_cadernos": cadernos, "list_secoes": secoes[int(options_values["secoes"])] }
     return data
     
 #def post ...
