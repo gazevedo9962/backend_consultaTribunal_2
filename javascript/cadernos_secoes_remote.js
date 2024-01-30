@@ -15,7 +15,7 @@ function getdata () {
   })
   .then(function (response) {
     // manipula o sucesso da requisição
-    console.log(response);
+    console.log(response.data);
   })
   .catch(function (error) {
     // manipula erros da requisição
