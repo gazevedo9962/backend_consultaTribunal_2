@@ -80,6 +80,18 @@ async def get_secoes(request: Request, model_service: ModelService):
     secoes = cadernos[int(options_values["cadernos"])]["secao"] 
     return secoes[int(options_values["secoes"])]
 
+@app.get("/tjsp/servicos/{model_service}/secoes2")
+async def get_secoes(request: Request, model_service: ModelService):
+    #rasc - func - get_service
+    #cadernos: Union[str, int] = 0, secoes: Union[str, int] = 0 
+    options_values = {
+                "cadernos": request.query_params["cadernos"] or 0,
+                "secoes": request.query_params["secoes"] or 0
+                }
+    with open("./dados/json/secao.json") as arquivo:
+        secoes = json.load(arquivo)
+    return secoes[int(options_values["cadernos"])][int(options_values["secoes"])] 
+
 @app.get("/tjsp/servicos/{model_service}/cadernos")
 async def get_cadernos(request: Request, model_service: ModelService):
     #rasc - func - get_cadernos
@@ -97,9 +109,11 @@ async def get_cadernos_secoes(request: Request, model_service: ModelService):
     #rasc - func - get_cadernos
     #print(request.query_params["teste"])
     #json.dumps(data, indent=4, sort_keys=True)
-    with open("./dados/json/cadernos.json") as arquivo:
+     with open("./dados/json/cadernos.json") as arquivo:
         cadernos = json.load(arquivo)
-    return cadernos
+    with open("./dados/json/secao.json") as arquivo:
+        secoes = json.load(arquivo)
+    return { "list_cadernos": cadernos, "list_secoes", secoes }  
     
 #def post ...
 @app.post("/backgroundDemo")

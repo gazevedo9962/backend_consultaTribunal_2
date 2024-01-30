@@ -175,8 +175,15 @@ def up_db(driver: webdriver.Chrome) -> str:
             "source": driver.page_source,
             "list_cadernos": list_cadernos
             }
+
+    #def secoes
+    list_secoes = []
+    for  x in list_cadernos:
+        list_secoes.append(x["secao"])
+
     #Armazenando dados
     write("./dados/json/cadernos.json", list_cadernos, "json")
+    write("./dados/json/secao.json", list_secoes, "json")
     write("./dados/resp_source/index.html", "<!DOCTYPE html>\n" + data["source"], False)
     #Retornando data
     return data    
