@@ -117,7 +117,10 @@ async def get_cadernos_secoes(request: Request, model_service: ModelService):
         cadernos = json.load(arquivo)
     with open("./dados/json/secao.json") as arquivo:
         secoes = json.load(arquivo)
-    return { "list_cadernos": cadernos[int(options_values["cadernos"])], "list_secoes", secoes[int(options_values["secoes"])] }  
+
+    data = { "list_cadernos": cadernos[int(options_values["cadernos"])], "list_secoes", secoes[int(options_values["secoes"])] }
+    
+    return   
     
 #def post ...
 @app.post("/backgroundDemo")
