@@ -90,7 +90,7 @@ async def get_secoes(request: Request, model_service: ModelService):
                 }
     with open("./dados/json/secao.json") as arquivo:
         secoes = json.load(arquivo)
-    return secoes[int(options_values["cadernos"])][int(options_values["secoes"])] 
+    return secoes[int(options_values["cadernos"])]
 
 @app.get("/tjsp/servicos/{model_service}/cadernos")
 async def get_cadernos(request: Request, model_service: ModelService):
