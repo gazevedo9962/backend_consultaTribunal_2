@@ -59,7 +59,7 @@ async def get_service(request: Request, model_service: ModelService):
     return data
 
 @app.get("/tjsp/servicos/{model_service}/up_db")
-async def get_service(request: Request, model_service: ModelService):
+async def get_up_db(request: Request, model_service: ModelService):
     #rasc - func - get_service
     #cadernos: Union[str, int] = 0, secoes: Union[str, int] = 0 
     driver=createDriver()
@@ -68,7 +68,7 @@ async def get_service(request: Request, model_service: ModelService):
     return data    
 
 @app.get("/tjsp/servicos/{model_service}/secoes")
-async def get_service(request: Request, model_service: ModelService):
+async def get_secoes(request: Request, model_service: ModelService):
     #rasc - func - get_service
     #cadernos: Union[str, int] = 0, secoes: Union[str, int] = 0 
     options_values = {
