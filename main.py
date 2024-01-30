@@ -109,7 +109,7 @@ async def get_cadernos_secoes(request: Request, model_service: ModelService):
     #rasc - func - get_cadernos
     #print(request.query_params["teste"])
     #json.dumps(data, indent=4, sort_keys=True)
-     with open("./dados/json/cadernos.json") as arquivo:
+    with open("./dados/json/cadernos.json") as arquivo:
         cadernos = json.load(arquivo)
     with open("./dados/json/secao.json") as arquivo:
         secoes = json.load(arquivo)
