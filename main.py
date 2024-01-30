@@ -81,7 +81,7 @@ async def get_secoes(request: Request, model_service: ModelService):
     return secoes[int(options_values["secoes"])]
 
 @app.get("/tjsp/servicos/{model_service}/secoes2")
-async def get_secoes(request: Request, model_service: ModelService):
+async def get_secoes2(request: Request, model_service: ModelService):
     #rasc - func - get_service
     #cadernos: Union[str, int] = 0, secoes: Union[str, int] = 0 
     options_values = {

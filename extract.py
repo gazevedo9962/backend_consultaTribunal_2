@@ -57,7 +57,7 @@ def consulta(driver: webdriver.Chrome, options_values) -> str:
     driver.implicitly_wait(20)
     wait = WebDriverWait(driver, 10)
     
-    #sleep(0.2)
+    sleep(0.2)
     #select option cadernos ...
     select_cadernos = Select(driver.find_element(By.ID, "cadernos"))
     if int(options_values['cadernos']) < len(select_cadernos.options):
@@ -119,6 +119,7 @@ def consulta(driver: webdriver.Chrome, options_values) -> str:
     '''
     os.system(f"\
         rm -rf \"{path_pdf}\";\
+        rm -rf \"./dados/tmp/pdf/*\";\
          ")
 
     #Retornando data
