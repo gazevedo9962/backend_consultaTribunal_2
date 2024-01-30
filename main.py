@@ -113,10 +113,10 @@ async def get_cadernos_secoes(request: Request, model_service: ModelService):
         "cadernos": request.query_params["cadernos"] or 0,
         "secoes": request.query_params["secoes"] or 0
         }
-    with open("./dados/json/cadernos.json") as arquivo:
-        cadernos = json.load(arquivo)
-    with open("./dados/json/secao.json") as arquivo:
-        secoes = json.load(arquivo)
+    with open("./dados/json/cadernos.json") as arquivo1:
+        cadernos = json.load(arquivo1)
+    with open("./dados/json/secao.json") as arquivo2:
+        secoes = json.load(arquivo2)
 
     data = { "list_cadernos": cadernos[int(options_values["cadernos"])], "list_secoes": secoes[int(options_values["secoes"])] }
 
