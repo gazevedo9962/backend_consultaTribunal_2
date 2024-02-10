@@ -1,4 +1,4 @@
 import json
-with open("./dados/cadernos.json") as arquivo:
+with open("../dados/json/cadernos.json") as arquivo:
     dados = json.load(arquivo)
     print( dados[0] )

@@ -7,22 +7,22 @@ const command = require("./command")
 // "http://localhost:6546/"
 
 function getdata () {
-  axios.get("https://fastapi-selenium-production-30d6.up.railway.app/tjsp/servicos/consulta/secoes", {
+  axios.get("https://fastapi-selenium-production-30d6.up.railway.app/tjsp/servicos/consulta/secoes2", {
     params: {
         "cadernos": argv[2] || 0,
         "secoes": argv[3] || 0
     }
   })
   .then(function (response) {
-    // manipula o sucesso da requisiÃ§Ã
+    // manipula o sucesso da requisição
     console.log(response);
   })
   .catch(function (error) {
-    // manipula erros da requisiÃ§Ã
+    // manipula erros da requisição
     console.error(error);
   })
   .finally(function () {
-    // sempre serÃ¡ executado
+    // sempre serão executado
   });
 }
 getdata();

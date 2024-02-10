@@ -9,7 +9,7 @@ from selenium.webdriver.support import expected_conditions as EC
 import json
 import os
 from selenium.webdriver.chrome.options import Options
-from manipulating_pdf import *
+#from manipulating_pdf import *
 
 def tearDown(driver):
         driver.quit()
@@ -102,12 +102,12 @@ def consulta(driver: webdriver.Chrome, options_values) -> str:
             "source": driver.page_source
             }
     #Armazenando dados
+    #cat \"./dados/tmp/log/files.txt\";
     write("./dados/resp_source/index.html", "<!DOCTYPE html>\n" + data["source"], False)
     os.system(f"\
         python download_pdf.py -u \"{url_geral}\" -p \"{path_pdf}\";\
         echo \"{name_pdf}.pdf\" >> \"./dados/tmp/log/files.txt\";\
-        ls -a \"./dados/tmp/pdf\";\
-        cat \"./dados/tmp/log/files.txt\"; ")
+        ls -a \"./dados/tmp/pdf\"; ")
         
     '''    
     with open("./dados/json/cadernos.json") as arquivo:
@@ -116,12 +116,12 @@ def consulta(driver: webdriver.Chrome, options_values) -> str:
     secoes = cadernos[int(options_values["cadernos"])]["secao"]
     value_secao_text = secoes[ int(options_values['secoes']) ]["text"]
     data["details_processo"] = raspar_pdf_2(path_pdf,value_secao_text)
-    '''
-    os.system(f"\
-        rm -rf \"{path_pdf}\";\
-        rm -rf \"./dados/tmp/pdf/*\";\
+
+     os.system(f"\
+        rm -rf \"{path_pdf}\";\\
          ")
 
+    '''
     #Retornando data
     return data
 
