@@ -1,4 +1,4 @@
-from fastapi import FastAPI, BackgroundTasks, HTTPException, Request
+from fastapi import FastAPI, BackgroundTasks, HTTPException, Request, Query
 from pydantic import BaseModel
 from extract import *
 import os
@@ -7,6 +7,7 @@ from typing import Union
 import json
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
 
 SECRET = os.getenv("SECRET")
 app = FastAPI()
@@ -121,11 +122,35 @@ async def get_cadernos_secoes(request: Request, model_service: ModelService):
         
     data = { "list_cadernos": cadernos, "list_secoes": secoes[int(options_values["secoes"])] }
     return data
-    
+
+@app.get("/Downloads/")
+async def get_items(request: Request):
+
+       results = {}
+       PASTA_ATUAL = "./"
+       entry = PASTA_ATUAL + request.query_params["file"] + "/"
+
+       dirs = os.listdir(PASTA_ATUAL)
+       # ******************** Pega todas as pastas ********************
+       #results["folders"] = [val for val in dirs if os.path.isdir(entry+val)]
+       # ********************  Pega todos os arquivos ********************
+       #results["files"] = [val for val in dirs if os.path.isfile(PASTA_ATUAL+val) ]
+       results["files"] = [val for val in dirs if os.path.isfile(PASTA_ATUAL+val) and val == request.query_params["file"] ]
+       #results["path_vars"] = query_items["q"]
+
+       for file in results["files"]:
+        print(type(file)) 
+        if file == request.query_params["file"]:
+            return FileResponse(PASTA_ATUAL+file)
+        else:
+            return "Nenhum arquivo foi encontrado"
+            #return results["files"]
+
 #def post ...
 @app.post("/backgroundDemo")
 async def demo_post(inp: Msg, background_tasks: BackgroundTasks):
     
     background_tasks.add_task(doBackgroundTask, inp)
     return {"message": "Success, background task started"}
+
 

@@ -12,7 +12,11 @@ value_secao = sys.argv[1]
 path = sys.argv[2]
 pdf_file = open(path, 'rb')
 
+#Exemplo:
+#cmd => py manipulating_pdf.py "Processamento da 1ª Câmara Reservada de Direito Empresarial - Pateo do Colégio - sala 404" diario.pdf
+
 def raspar_pdf_2(path,value_secao):
+
 	#Open PDF
 	pdf_file = open(path, 'rb')
 	#Read PDF
@@ -24,18 +28,27 @@ def raspar_pdf_2(path,value_secao):
 	page_content = page.extract_text()
 	#Transform in string
 	parsed = ''.join(page_content)
+	#Lista onde ficara todos os processos da seção
+	list_dados_processos = []
 	#value="Subseção V - Intimações de Despachos"
 	#print(parsed.split(value_secao))
 
+	#print(f"\nlen(read_pdf.pages):\n{len(read_pdf.pages)}\n")
 	echo_all(parsed.split(value_secao))
 
 	#Definindo a seção
-	corte=parsed.split(value_secao)[ len(parsed.split(value_secao)) - 1]
+	corte=parsed.split(value_secao)[ len(parsed.split(value_secao)) - 1 ]
+	#echo_e(page_content.split(value_secao)[ len(page_content.split(value_secao)) - 1], "Seção :")
+	#echo_e(page_content, "page_content :")
+	#echo_e(page, "page :")
+	#echo_e(corte, "corte :")
+	#echo_e(parsed, "parsed :")
 
 	#Analisando se existem processos
 	#Caso 1 : " p_processo_1 === 'Processo' "
 	if len(re.findall(p_processo_1, corte)) >= 1 and re.findall(p_processo_1, corte):
 		print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+		print("Tentando o padrão p_processo_1 ... ")
 		print(re.search(p_processo_1, corte))
 		print(re.findall(p_processo_1, corte))
 		numeros_processos = re.findall(p_processo_1, corte)
@@ -43,22 +56,24 @@ def raspar_pdf_2(path,value_secao):
 	#Caso 2 : " p_processo_2 === 'Nº' "
 	else:
 		print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
+		print("Tentando o padrão p_processo_2 ... ")
 		print(re.search(p_processo_2, corte))
-		print(re.findall(p_processo_2, corte))
+		print(f"\nnumeros_processos:\n{re.findall(p_processo_2, corte)}\n")
 		numeros_processos = re.findall(p_processo_2, corte)
+		#print(numeros_processos)
 		print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
 
 	#Retirando cada processo existente um por um somente se existem processos 
 	#na seção armazenada na váriavel corte
-	if numeros_processos:
+	if numeros_processos != []:
 		total_numeros_processos = len(numeros_processos)
-		#Lista onde ficara todos os processos da seção
-		list_dados_processos = []
 		for n in numeros_processos:
 			#index de n
 			i = numeros_processos.index(n)
 			#Será o numero do processo do qual será retirado da seção
-			corte_inicial = corte.replace(n, "#sini")
+			corte_inicial = corte.replace(n, " #sini ")
+			#echo_e(corte_inicial, "corte_inicial :")
+			#print(f"corte_inicial:\n{corte_inicial}")
 			elemento = i+1
 			if elemento == total_numeros_processos:
 				#Será o numero do processo sucessor do qual será retirado da seção
@@ -68,15 +83,21 @@ def raspar_pdf_2(path,value_secao):
 				#ultimo_elemento_corte_final = corte_final.split()[ len(corte_final.split()) - 1 ]
 			else:
 				#Será o numero do processo sucessor do qual será retirado da seção
-				corte_final = corte_inicial.replace(numeros_processos[i + 1], "#sfin")
+				corte_final = corte_inicial.replace(numeros_processos[i + 1], " #sfin ")
+				#echo_e(corte_final, "corte_final :")
+				#print(f"\ncorte_final.split():\n{corte_final.split()}\n")
+				#print(f"corte_final:\n{corte_final}")
 				processoOfcorte = split_interval("#sini", "#sfin", corte_final)
 
 			#processoOfcorte = split_interval("#sini", corte_final.split()[ len(corte_final.split()) ], corte_final)
-			print(processoOfcorte)
+			if processoOfcorte:
+				print(processoOfcorte)
+			else:
+				print("processoOfcorte não foi definido ... ")
 			list_dados_processos.append({ "numero_processo": n, "text": processoOfcorte })
 
 	#Se os dados forem defindos corretamente então exiba eles e retorne os mesmos			
-	if list_dados_processos:
+	if list_dados_processos != []:
 		echo_all(list_dados_processos)
 		return list_dados_processos
 	#Caso contrário a extração dos dados deu errado então,
@@ -183,7 +204,8 @@ def raspar_pdf_2(path,value_secao):
 
 raspar_pdf_2(path,value_secao)
 
-########################### Rascunho #####################################################
+########################### Rascunho INI #####################################################
+
 '''
 def raspar_pdf():
 # Abre o arquivo pdf 
@@ -384,3 +406,6 @@ print("################################################################")
     print("################################################################")
     print("################################################################")
 '''
+
+
+########################### Rascunho FIN #####################################################

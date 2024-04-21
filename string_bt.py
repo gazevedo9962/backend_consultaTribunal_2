@@ -15,12 +15,17 @@ def cat_arg(parametro, string_arg):
             path = array_string[ array_string.index(parametro) + 1 ]
     return path 
 
+def echo_e(elemento, name):
+    print(f"\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&| {name} INI |&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n")
+    print(elemento)
+    print(f"\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&| {name} FIN |&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n")
+
 def echo_all(array):
     for e in array:
         index = array.index(e)
-        print(f"-------------------------| Elemento {index} |----------------------------------")
+        print(f"\n-------------------------| Elemento {index} INI |----------------------------------\n")
         print(e)
-        print("-----------------------------------------------------------")
+        print(f"\n-------------------------| Elemento {index} FIN |----------------------------------\n")
     
 
 def split_interval(s_inicial, s_final, string):
@@ -45,7 +50,7 @@ p_text = re.compile('[\w\s\d\,\-\.]+')
 p_traço = re.compile('[\s]{1}-[\s]{1}')
 p_processo = re.compile('\d+[-]{1}\d{2}\.{1}\d{4}\.{1}\d{1}\.{1}\d{2}\.{1}\d{4}')
 p_processo_1 = re.compile('Processo \d+[-]{1}\d{2}\.{1}\d{4}\.{1}\d{1}\.{1}\d{2}\.{1}\d{4} -')
-p_processo_2 = re.compile('Nº \d+[-]{1}\d{2}\.{1}\d{4}\.{1}\d{1}\.{1}\d{2}\.{1}\d{4} -')
+p_processo_2 = re.compile('\n[\w]*[\s]*\d+[-]{1}\d{2}\.{1}\d{4}\.{1}\d{1}\.{1}\d{2}\.{1}\d{4}[\;]*[\s]*[\-]?')
 p_OAB_1 = re.compile('\(\w{3} \d{5,6}\/{1}\w{2}\)\w*')
 p_OAB_2 = re.compile('\d{5,6}\/{1}\w{2}\)\w*')
 p_OAB_3 = re.compile('\(\w{3}\n\d{5,6}\/{1}\w{2}\)\w*')

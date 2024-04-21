@@ -10,3 +10,5 @@ response = requests.get(url)
 filename.write_bytes(response.content)
 #print(response.content)
 print(filename)
+#Exemplo:
+#cmd => py download_pdf.py -u "https://dje.tjsp.jus.br/cdje/getPaginaDoDiario.do?cdVolume=18&nuDiario=3912&cdCaderno=11&nuSeqpagina=263&uuidCaptcha=" -p "./diario2.pdf"

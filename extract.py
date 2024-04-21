@@ -11,15 +11,19 @@ import os
 from selenium.webdriver.chrome.options import Options
 #from manipulating_pdf import *
 
+#Função para sair do Navegador
 def tearDown(driver):
         driver.quit()
 
+#Retorna o conteudo do arquivo, sem o símbolo de nova linha
 def cat_file(path):
     arquivo = open(path, 'r')
     conteudo = arquivo.read()
     conteudo = str(conteudo).replace("\n", "")
     return conteudo 
 
+#Escreve em um determinado arquivo um dado no formato (dadotype) json se especificado 
+#caso não especificado o dado será escrito no formato padrão (texto).
 def write(path, dado, dadotype):
     #echo {dado} > \"{path}\" &&\
     print(f"{path}")
@@ -31,6 +35,8 @@ def write(path, dado, dadotype):
         arquivo = open(path, "w", -1, "utf-8")
         arquivo.write(str(dado))
 
+#Inicializa um rôbo no navegador chorme com configurações especificas
+#A principal é que o scraping será feito no modo sem UI.
 def createDriver() -> webdriver.Chrome:
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument("--headless")
@@ -58,7 +64,7 @@ def consulta(driver: webdriver.Chrome, options_values) -> str:
     wait = WebDriverWait(driver, 10)
     
     sleep(0.2)
-    #select option cadernos ...
+    #***************** Select option cadernos ... *****************
     select_cadernos = Select(driver.find_element(By.ID, "cadernos"))
     if int(options_values['cadernos']) < len(select_cadernos.options):
         select_cadernos.select_by_value(options_values['cadernos'])
@@ -66,42 +72,46 @@ def consulta(driver: webdriver.Chrome, options_values) -> str:
         select_cadernos.select_by_value(str(0))    
 
     sleep(0.2)
-    #select option secao ...
+    #***************** Select option secao ... *******************
     select_secoes = Select(driver.find_element(By.ID, "secoes"))
     if int(options_values['secoes']) < len(select_secoes.options):
         select_secoes.select_by_value(options_values['secoes'])
     else:
         select_secoes.select_by_value(str(0))
 
-    #sleep(0.2)
-    #consultar ...
+    # Consultar ...
     consultar = driver.find_element(By.ID, "consultar")
     consultar.click()
     
-    # Wait for the new window or tab
+    #***************** Wait for the new window or tab *********************
     wait.until(EC.number_of_windows_to_be(2))
     driver.switch_to.window(driver.window_handles[1])
     print(driver.current_url)
-    # Def url PDF
+
+    #************************** Def url PDF *******************************
     strings_url = driver.current_url.split(".do")
     string_inicial = "https://dje.tjsp.jus.br/cdje/getPaginaDoDiario.do"
     string_final = "&uuidCaptcha="
     url_geral = string_inicial + strings_url[1] + string_final
-    # Def dados PDF 
+
+    #************************** Def dados PDF *******************************
     os.system("echo $(node ./javascript/genKey.js 5) > ./dados/tmp/var/random")
     random = cat_file('./dados/tmp/var/random') 
     print(random)
     name_pdf = f"arquivo_{random}"
     path_pdf = f"./dados/tmp/pdf/{name_pdf}.pdf"
+
     #Wait for frame pdf is open in new window
     #driver.execute_script("window.location.replace( document.getElementsByName('bottomFrame')[0].contentWindow.location.href )")
     #sleep(0.5)
     #print(driver.current_url)
+    
     data = { 
             "url": url_geral,
             "source": driver.page_source
             }
-    #Armazenando dados
+
+    #************************ Armazenando dados ************************
     #cat \"./dados/tmp/log/files.txt\";
     write("./dados/resp_source/index.html", "<!DOCTYPE html>\n" + data["source"], False)
     os.system(f"\
@@ -110,6 +120,7 @@ def consulta(driver: webdriver.Chrome, options_values) -> str:
         ls -a \"./dados/tmp/pdf\"; ")
         
     '''    
+    ####################### IGONORE !!! #########################
     with open("./dados/json/cadernos.json") as arquivo:
         cadernos = json.load(arquivo)
 
@@ -120,7 +131,7 @@ def consulta(driver: webdriver.Chrome, options_values) -> str:
      os.system(f"\
         rm -rf \"{path_pdf}\";\\
          ")
-
+    ####################### IGONORE !!! #########################
     '''
     #Retornando data
     return data
@@ -131,7 +142,7 @@ def up_db(driver: webdriver.Chrome) -> str:
     wait = WebDriverWait(driver, 10)
     
     sleep(0.2)
-    #select option cadernos ...
+    #***************** Select option cadernos ... *****************
     select_cadernos = Select(driver.find_element(By.ID, "cadernos"))  
     list_cadernos = []
     value_cadernos = 0
@@ -155,11 +166,11 @@ def up_db(driver: webdriver.Chrome) -> str:
         value_cadernos = value_cadernos + 1                
     
     sleep(0.2)
-    #consultar ...
+    #*************************** Consultar ... ***************************
     consultar = driver.find_element(By.ID, "consultar")
     consultar.click()
     
-    # Wait for the new window or tab
+    #******************* Wait for the new window or tab *******************
     wait.until(EC.number_of_windows_to_be(2))
     driver.switch_to.window(driver.window_handles[1])
     print(driver.current_url)
@@ -171,22 +182,25 @@ def up_db(driver: webdriver.Chrome) -> str:
     #driver.execute_script("window.location.replace( document.getElementsByName('bottomFrame')[0].contentWindow.location.href )")
     #sleep(0.5)
     #print(driver.current_url)
+
+    #******************* def data *******************
     data = { 
             "url": url_geral,
             "source": driver.page_source,
             "list_cadernos": list_cadernos
             }
 
-    #def secoes
+    #************************ def secoes ************************
     list_secoes = []
     for  x in list_cadernos:
         list_secoes.append(x["secao"])
 
-    #Armazenando dados
+    #************************ Armazenando dados ************************
     write("./dados/json/cadernos.json", list_cadernos, "json")
     write("./dados/json/secao.json", list_secoes, "json")
     write("./dados/resp_source/index.html", "<!DOCTYPE html>\n" + data["source"], False)
-    #Retornando data
+    
+    #************************ Retornando data ************************
     return data    
 
 def getTjsp_secao(driver: webdriver.Chrome, options_values) -> str:
@@ -195,7 +209,7 @@ def getTjsp_secao(driver: webdriver.Chrome, options_values) -> str:
     wait = WebDriverWait(driver, 10)
     
     sleep(0.2)
-    #select option cadernos ...
+    #***************** Select option cadernos ... *****************
     select_cadernos = Select(driver.find_element(By.ID, "cadernos"))
     if int(options_values['cadernos']) < len(select_cadernos.options):
         select_cadernos.select_by_value(options_values['cadernos'])
@@ -203,7 +217,7 @@ def getTjsp_secao(driver: webdriver.Chrome, options_values) -> str:
         select_cadernos.select_by_value(str(0))    
 
     sleep(0.2)
-    #select option secao ...
+    #***************** Select option secao ... *****************
     select_secoes = Select(driver.find_element(By.ID, "secoes"))
     if int(options_values['secoes']) < len(select_secoes.options):
         select_secoes.select_by_value(options_values['secoes'])
