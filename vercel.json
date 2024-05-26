@@ -4,12 +4,20 @@
       {
         "src": "main.py",
         "use": "@vercel/python"
+      },
+      {
+        "src": "runner.js",
+        "use": "@vercel/node"
       }
     ],
     "routes": [
       {
         "src": "/(.*)",
         "dest": "main.py"
+      },
+      {
+        "src": "/run-script",
+        "dest": "runner.js"
       }
     ]
   }

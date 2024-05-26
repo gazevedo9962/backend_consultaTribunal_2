@@ -5,7 +5,7 @@ sudo apt-get update
 sudo apt-get install build-essential python3-dev
 # Ativar um ambiente virtual
 source venv/bin/activate
-# Atualizar pip e instalar Cython
+# Atualizar pip 
 pip install --upgrade pip
 # Instalar PyYAML usando binários para evitar compilação do código-fonte
 pip install --only-binary :all: PyYAML
